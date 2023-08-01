@@ -2,7 +2,7 @@ import { test,expect } from '@playwright/test';
 import { TodoPage } from '../pages/todo/TodoPage';
 import { faker } from '@faker-js/faker';
 import { RegisterRequest } from '../models/register/request/RegisterRequest';
-import { RegisterPage } from '../pages/Register/RegisterPage';
+import { RegisterPage } from '../pages/register/RegisterPage';
 import { NewTodoPage } from '../pages/newTodo/NewTodoPage';
 import { AddTodoRequest } from '../models/Todo/AddTodo/request/AddTodoRequest';
 

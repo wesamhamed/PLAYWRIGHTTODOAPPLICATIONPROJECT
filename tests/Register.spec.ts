@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { test,expect } from '@playwright/test';
-import { RegisterPage } from '../pages/Register/RegisterPage';
+import { RegisterPage } from '../pages/register/RegisterPage';
 import ErrorMessages from "../data/ErrorMessages";
 import { RegisterRequest } from '../models/register/request/RegisterRequest';
 import UserAPI from '../api/UserAPI';
