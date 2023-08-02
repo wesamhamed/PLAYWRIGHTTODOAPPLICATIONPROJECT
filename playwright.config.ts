@@ -55,7 +55,7 @@ export default defineConfig({
     {
       name: 'chromium',
       use: {
-        headless:false,
+        headless:true,
         // storageState:STORAGE_STATE,
         ...devices['Desktop Chrome'] 
       },
