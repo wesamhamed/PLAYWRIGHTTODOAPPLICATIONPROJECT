@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 import { RegisterRequest } from '../models/register/request/RegisterRequest';
 import { RegisterPage } from '../pages/register/RegisterPage';
 import { NewTodoPage } from '../pages/newTodo/NewTodoPage';
-import { AddTodoRequest } from '../models/Todo/AddTodo/request/AddTodoRequest';
+import { AddTodoRequest } from '../models/todo/addTodo/request/AddTodoRequest';
 
 test.describe("Todo test cases",()=>{
 
