@@ -1,33 +1,38 @@
-import {  APIRequestContext, Page } from "@playwright/test";
-import { TodoPage } from "../todo/TodoPage";
-import TodoAPI from "../../api/TodoAPI";
-import { AddTodoRequest } from "../../models/Todo/AddTodo/request/AddTodoRequest";
-
+import { NewTodoPageGetController } from "./NewTodoPageGetController";
+import { NewTodoPageActController } from "./NewTodoPageActController";
+import {NewTodoPageVerifyController} from "./NewTodoPageVerifyController";
 export class NewTodoPage{
-  private page:Page;
-  private request?:APIRequestContext;
+    
+  private static _newTodoPage:NewTodoPage;
 
-  constructor(page:Page,request?:APIRequestContext){
-    this.page = page;
-    this.request = request;
+  private _act:NewTodoPageActController;
+  private _verify:NewTodoPageVerifyController;
+  private _get:NewTodoPageGetController;
+
+  public  act():NewTodoPageActController {
+      return this._act;
   }
-  public async load() {
-    await this.page.goto("/todo/new")
-    return this;
+
+  public verify():NewTodoPageVerifyController {
+      return this._verify;
   }
-  private get newTodoInput(){
-    return "[data-testid='new-todo']";
+
+  public get():NewTodoPageGetController {
+      return this._get;
   }
-  private get newTodoButton(){
-    return "[data-testid='submit-newTask']";
+
+  private constructor();
+  private constructor( act:NewTodoPageActController,  verify:NewTodoPageVerifyController,  get:NewTodoPageGetController);
+  private constructor( act?:NewTodoPageActController,  verify?:NewTodoPageVerifyController,  get?:NewTodoPageGetController) {
+      this._act = act!;
+      this._verify = verify!;
+      this._get = get!;
   }
-  public async addNewTodo(item:string) {
-    await this.page.locator(this.newTodoInput).clear();
-    await this.page.locator(this.newTodoInput).type(item);
-    await this.page.locator(this.newTodoButton).click();
-    return new TodoPage(this.page);
-  }
-  public async addNewTodoUsingAPI(addTodoRequest:AddTodoRequest,token:string){
-    await new TodoAPI(this.request!).addTodo(addTodoRequest,token)
+
+  public static getNewTodoPage():NewTodoPage {
+      if (NewTodoPage._newTodoPage == null) {
+        NewTodoPage._newTodoPage = new NewTodoPage(NewTodoPageActController.getNewTodoPageActController(), NewTodoPageVerifyController.getNewTodoPageVerifyController(), NewTodoPageGetController.getNewTodoPageGetController());
+      }
+      return NewTodoPage._newTodoPage;
   }
 }

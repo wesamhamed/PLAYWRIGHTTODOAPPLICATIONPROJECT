@@ -1,55 +1,41 @@
-import { Locator, Page } from "@playwright/test";
-import { TodoPage } from "../todo/TodoPage";
+import { LoginPageGetController } from "./LoginPageGetController";
+import {LoginPageActController} from "./LoginPageActController";
+import {LoginPageVerifyController} from "./LoginPageVerifyController";
 
 export class LoginPage{
-  private page:Page;
 
-  constructor(page:Page){
-      this.page = page;
+  private static _loginPage:LoginPage;
+
+  private _get:LoginPageGetController;
+  private _act:LoginPageActController;
+  private _verify:LoginPageVerifyController;
+
+  public act():LoginPageActController {
+      return this._act;
   }
 
-  private get emailInput(){
-    return "[data-testid='email']";
+  public verify():LoginPageVerifyController {
+      return this._verify;
   }
-  private get passwordInput(){
-    return "[data-testid='password']";
+
+  public get():LoginPageGetController {
+      return this._get;
   }
-  private get submitButton(){
-    return "[data-testid='submit']";
+
+  // Constructor
+  private constructor();
+  private constructor( get:LoginPageGetController,  act:LoginPageActController,  verify:LoginPageVerifyController);
+  private constructor( get?:LoginPageGetController,  act?:LoginPageActController,  verify?:LoginPageVerifyController) {
+      this._get = get!;
+      this._act = act!;
+      this._verify = verify!;
   }
-  private get errorMessage(){
-    return "[data-testid='error-alert'] div:last-child";
-  }
-  public async load():Promise<LoginPage> {
-    await this.page.goto("/login")
-    return this;
-  }
-  public async login(email:string, password:string):Promise<TodoPage> {
-    await this.page.locator(this.emailInput).clear();
-    await this.page.locator(this.emailInput).type(email);
-    await this.page.locator(this.passwordInput).clear();
-    await this.page.locator(this.passwordInput).type(password);
-    await this.page.locator(this.submitButton).click();
-    await this.page.waitForURL("/todo");
-    return new TodoPage(this.page);
-  }
-  public async loginIfPasswordIsNotCorrect(email:string,password:string):Promise<LoginPage>{
-    await this.page.locator(this.emailInput).clear();
-    await this.page.locator(this.emailInput).type(email);
-    await this.page.locator(this.passwordInput).clear();
-    await this.page.locator(this.passwordInput).type(password);
-    await this.page.locator(this.submitButton).click();
-    await this.page.locator(this.errorMessage).waitFor({
-      state:"visible",
-      timeout:5000
-    });
-    return this;
-  }
-  public async getErrorMessage():Promise<Locator>{
-    return  this.page.locator(this.errorMessage);
-  }
-  public async getErrorMessageText():Promise<string>{
-    return  this.page.locator(this.errorMessage).innerText();
+
+  public static getLoginPage():LoginPage {
+      if (LoginPage._loginPage == null) {
+        LoginPage._loginPage  = new LoginPage(LoginPageGetController.getLoginPageGetController(), LoginPageActController.getLoginPageActController(), LoginPageVerifyController.getLoginPageVerifyController());
+      }
+      return LoginPage._loginPage ;
   }
 
 }

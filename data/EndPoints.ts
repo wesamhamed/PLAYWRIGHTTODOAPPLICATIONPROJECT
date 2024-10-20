@@ -1,4 +1,4 @@
-export default class EndPoint{
+export class EndPoint{
   public static readonly API_REGISTER_ENDPOINT = "/api/v1/users/register";
   public static readonly API_TODO_ENDPOINT = "/api/v1/tasks";
   public static readonly API_LOGIN_ENDPOINT = "/api/v1/users/login";

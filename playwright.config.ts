@@ -18,6 +18,7 @@ export default defineConfig({
   testDir: './tests',
   /* Maximum time one test can run for. */
   timeout: 30 * 1000,
+  
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
@@ -44,6 +45,9 @@ export default defineConfig({
      
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    launchOptions:{
+      slowMo:1_000
+    }
   },
 
   /* Configure projects for major browsers */
